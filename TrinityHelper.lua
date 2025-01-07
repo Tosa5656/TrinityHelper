@@ -148,7 +148,6 @@ function imgui.OnDrawFrame()
             imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
             if imgui.Button('Обновить') then
                 update_updater()
-                wait(100)
                 sampProcessChatInput('/trphelperupdate')
             end
             imgui.PopStyleColor(1)
