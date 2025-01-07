@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("4.1")
+script_version("4.0")
 
 require "lib.moonloader"
 local sampev = require "lib.samp.events"
