@@ -1,9 +1,14 @@
 script_name("Trinity Helper Updater")
 script_author("Tosa | lugovojs.")
-script_version("1.0")
+script_version("2.0")
 
 require "lib.moonloader"
 local dlstatus = require('moonloader').download_status
+
+local encoding = require "encoding"
+encoding.default = "CP1251"
+u8 = encoding.UTF8
+cp1251 = encoding.CP1251
 
 resources_dir = getGameDirectory() .. "//moonloader//resource//trinity_helper//"
 
@@ -23,13 +28,13 @@ function printChatMessage(message)
         print("Error! Message = nil. From printChatMessage")
         return
     end
-    sampAddChatMessage("{EE9611}" .. message, 0xFF9900)
+    sampAddChatMessage("{EE9611}" .. "[Trinity Helper] " .. cp1251:encode(message, "UTF-8"), 0xFF9900)
 end
 
 function check_update_script()
-    downloadUrlToFile('https://raw.githubusercontent.com/Tosa5656/TrinityHelper/refs/heads/master/resource/trinity_helper/version.txt', resources_dir .. "new_version.txt", function(id, status, p1, p2) 
+    downloadUrlToFile('https://github.com/Tosa5656/TrinityHelper/raw/refs/heads/master/resource/trinity_helper/version.txt', resources_dir .. "new_version.txt", function(id, status, p1, p2) 
         if status == dlstatus.STATUS_DOWNLOADINGDATA then
-            sampAddChatMessage(string.format('Загружено %d из %d.', p1, p2))
+            sampAddChatMessage(string.format('Р—Р°РіСЂСѓР¶РµРЅРЅРѕ %d РёР· %d.', p1, p2))
         elseif status == dlstatus.STATUS_ENDDOWNLOADDATA then
             actual_version_file = io.open(resources_dir .. "version.txt")
             actual_version = actual_version_file:read("*a")
@@ -40,7 +45,7 @@ function check_update_script()
             downloaded_version_file:close()
 
             if actual_version ~= downloaded_version then
-                printChatMessage("[Trinity Helper] " .. "Обнаружено обновление скрипта, используйте /trphelper для обновления.")
+                printChatMessage("РћР±РЅР°СЂСѓР¶РµРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ СЃРєСЂРёРїС‚Р°, РёСЃРїРѕР»СЊР·СѓР№С‚Рµ /trphelper РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.")
             end
         end
     end)

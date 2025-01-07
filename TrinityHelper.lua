@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("4.2.1")
+script_version("4.3")
 
 require "lib.moonloader"
 local sampev = require "lib.samp.events"
@@ -37,23 +37,23 @@ function imgui.OnDrawFrame()
         imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
         imgui.Begin("Trinity Helper", show_main_window, flags_main_window)
         imgui.BeginChild("##buttonslist",imgui.ImVec2(170 ,565), true)
-        if imgui.Button(u8"Î ñêðèïòå", imgui.ImVec2(160, 35)) then
+        if imgui.Button("О скрипте", imgui.ImVec2(160, 35)) then
             DescriptionId = 1
         end
 
-        if imgui.Button(u8"Èíôîðìàöèÿ\näëÿ õåëïåðîâ", imgui.ImVec2(160, 35)) then
+        if imgui.Button("Информация\nдля хелперов", imgui.ImVec2(160, 35)) then
             DescriptionId = 2
         end
 
-        if imgui.Button(u8"Íàñòðîéêè", imgui.ImVec2(160, 35)) then
+        if imgui.Button("Настройки", imgui.ImVec2(160, 35)) then
             DescriptionId = 3
         end
 
-        if imgui.Button(u8"Ïðåäëîæåíèÿ\n  ïî ñêðèïòó", imgui.ImVec2(160, 35)) then
+        if imgui.Button("Предложения\n  по скрипту", imgui.ImVec2(160, 35)) then
             DescriptionId = 4
         end
 
-        if imgui.Button(u8"Îáðàòíàÿ ñâÿçü", imgui.ImVec2(160, 35)) then
+        if imgui.Button("Обратная связь", imgui.ImVec2(160, 35)) then
             DescriptionId = 5
         end
         imgui.EndChild()
@@ -131,7 +131,7 @@ function printChatMessage(message)
         print("Error! Message = nil. From printChatMessage")
         return
     end
-    sampAddChatMessage("{EE9611}" .. "[Trinity Helper]" .. cp1251(message), 0xFF9900)
+    sampAddChatMessage("{EE9611}" .. "[Trinity Helper] " .. cp1251:encode(message, "UTF-8"), 0xFF9900)
 end
 
 function readDescription(number)
@@ -167,7 +167,7 @@ function main()
     desc4 = readDescription("4")
     desc5 = readDescription("5")
 
-    printChatMessage("[Trinity Helper] " .. "������ ��� ������� Trinity GTA" .. " v" ..  thisScript().version .. " " .. " �� Tosa | lugovojs." .. " ��� �������. ��������� - /trphelper.")
+    printChatMessage("Скрипт для хелперов Trinity GTA" .. " v" ..  thisScript().version .. " " .. " от Tosa | lugovojs" .. " был запущен. Активация - /trphelper.")
 
     imgui.Process = true
 
@@ -175,7 +175,7 @@ function main()
         imgui.Process = show_main_window.v
         if  wasKeyPressed(VK_1) and isKeyDown(VK_MENU) then
             if last_id == nil then
-                printChatMessage("�� ������� ���������� ������� � ��� ID.")
+                printChatMessage("Не найдено последного вопроса и его ID.")
             else
                 sampSetChatInputText('/answ '..last_id..' ')
                 sampSetChatInputEnabled(true)
@@ -185,11 +185,11 @@ function main()
 end
 
 function sampev.onServerMessage(color, text)
-    if text:match('������%s��%s.*%sID%s%d+:.*') then
-        last_id = text:match('������%s��%s.*%sID%s(%d+):.*')
+    if text:match(cp1251:encode('Вопрос%sот%s.*%sID%s%d+:.*', 'UTF-8')) then
+        last_id = text:match(cp1251:encode('Вопрос%sот%s.*%sID%s(%d+):.*', 'UTF-8'))
     end
 
-    if text:match('��%sManny_Westfall%s���%s.*:%s*') then
+    if text:match(cp1251:encode('От%sManny_Westfall%sдля%s.*:%s*', 'UTF-8')) then
         answers_count = answers_count + 1
         saveAnswers()
     end
@@ -213,7 +213,7 @@ end
 
 function answhelp_print()
     file = io.open(resources_dir .. "answers.txt", "r")
-    printChatMessage("���� ���������� �������: " .. answers_count)
+    printChatMessage("Количество ваших ответов: " .. answers_count)
     file:close()
 end
 
@@ -222,5 +222,5 @@ function answhelp_reset()
     file:write("0")
     file:close()
     loadAnswersCount()
-    printChatMessage("������� ������� ������� ������.")
+    printChatMessage("Счетчик ответов был обнулён.")
 end
