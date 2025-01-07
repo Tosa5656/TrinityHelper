@@ -25,7 +25,7 @@ desc1 = {"", ""}
 desc2 = {"", ""}
 desc3 = {"", ""}
 desc4 = {"", ""}
-desc5 = {"", " "}
+desc5 = {"", ""}
 
 local fontsize_basic = nil
 local fonsize_medium = nil
