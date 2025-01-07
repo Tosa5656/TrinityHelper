@@ -167,7 +167,7 @@ function main()
     desc4 = readDescription("4")
     desc5 = readDescription("5")
 
-    printChatMessage("[Trinity Helper] " .. "Скрипт для хелпера Trinity GTA" .. " v" ..  thisScript().version .. " " .. "от Tosa | lugovojs." .. " был запущен. Активация - /trphelper."ы)
+    printChatMessage("[Trinity Helper] " .. "Скрипт для хелпера Trinity GTA" .. " v" ..  thisScript().version .. " " .. "от Tosa | lugovojs." .. " был запущен. Активация - /trphelper.")
 
     imgui.Process = true
 
