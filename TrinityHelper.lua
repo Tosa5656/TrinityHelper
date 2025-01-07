@@ -311,7 +311,7 @@ function answhelp_reset()
     file:write("0")
     file:close()
     loadAnswersCount()
-    printChatMessage("Счетчик ответов был обнулён.")
+    printChatMessage("Счетчик ответов был обнулён. ")
 end
 
 function update_updater()
