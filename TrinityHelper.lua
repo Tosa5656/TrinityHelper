@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("5.3")
+script_version("5.4")
 
 require "lib.moonloader"
 local dlstatus = require('moonloader').download_status
@@ -115,10 +115,6 @@ function imgui.OnDrawFrame()
             imgui.Text(desc3[1])
             imgui.PopFont()
 
-            imgui.PushFont(fontsize)
-            imgui.Text("Answers Helper")
-            imgui.PopFont()
-
             imgui.PushFont(fontsize_basic)
             imgui.Text('Количество ответов: ' .. answers_count)
             imgui.PopFont()
@@ -152,9 +148,11 @@ function imgui.OnDrawFrame()
 
             imgui.PushFont(fontsize_basic)
             imgui.Text("5.3 - исправлен GUI некоторых вкладок, добавлена история обновлений.")
-            imgui.Text("5.1-5.2 - полный переход на кодировку  UTF-8, переход на MimGUI, добавлены настро-\nйки, обновления, исправление работы менеджера обновлений, исправление критической ошибки.")
+            imgui.Text("5.1-5.2 - полный переход на кодировку  UTF-8, переход на MimGUI, добавлены настро-\nйки, обновления, исправление работы менеджера обновлений, исправление крити-\nческой ошибки.")
             imgui.Text("4.x - исправление ошибок кодировки, рабочая система автообновления.")
             imgui.Text("3.x - первая открытая версия.")
+            imgui.Text(" ")
+            imgui.Text("Текущая версия скрипта: " .. actual_version .. " от 07.01.2025")
             imgui.PopFont()
         end
 
