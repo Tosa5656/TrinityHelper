@@ -34,7 +34,7 @@ end
 function check_update_script()
     downloadUrlToFile('https://github.com/Tosa5656/TrinityHelper/raw/refs/heads/master/resource/trinity_helper/version.txt', resources_dir .. "new_version.txt", function(id, status, p1, p2) 
         if status == dlstatus.STATUS_DOWNLOADINGDATA then
-            sampAddChatMessage(string.format('Загруженно %d из %d.', p1, p2))
+            sampAddChatMessage(string.format('Загруженно %d изВ %d.', p1, p2))
         elseif status == dlstatus.STATUS_ENDDOWNLOADDATA then
             actual_version_file = io.open(resources_dir .. "version.txt")
             actual_version = actual_version_file:read("*a")

@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("4.3")
+script_version("4.5")
 
 require "lib.moonloader"
 local sampev = require "lib.samp.events"
@@ -27,8 +27,9 @@ desc3 = {"", ""}
 desc4 = {"", ""}
 desc5 = {"", " "}
 
-local fontsize = nil
 local fontsize_basic = nil
+local fonsize_medium = nil
+local fontsize = nil
 
 function imgui.OnDrawFrame()
     if show_main_window then
@@ -36,29 +37,41 @@ function imgui.OnDrawFrame()
         local sizeX, sizeY = getScreenResolution()
         imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
         imgui.Begin("Trinity Helper", show_main_window, flags_main_window)
+
+        local titlebarBgColor = imgui.GetStyleColorVec4(imgui.Col.TitleBg)
+
         imgui.BeginChild("##buttonslist",imgui.ImVec2(170 ,565), true)
+        imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
         if imgui.Button("О скрипте", imgui.ImVec2(160, 35)) then
             DescriptionId = 1
         end
+        imgui.PopStyleColor(1)
 
+        imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
         if imgui.Button("Информация\nдля хелперов", imgui.ImVec2(160, 35)) then
             DescriptionId = 2
         end
+        imgui.PopStyleColor(1)
 
+        imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
         if imgui.Button("Настройки", imgui.ImVec2(160, 35)) then
             DescriptionId = 3
         end
+        imgui.PopStyleColor(1)
 
+        imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
         if imgui.Button("Предложения\n  по скрипту", imgui.ImVec2(160, 35)) then
             DescriptionId = 4
         end
+        imgui.PopStyleColor(1)
 
+        imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
         if imgui.Button("Обратная связь", imgui.ImVec2(160, 35)) then
             DescriptionId = 5
         end
+        imgui.PopStyleColor(1)
         imgui.EndChild()
         imgui.SameLine()
-        --imgui.PopStyleColor(1)
         imgui.BeginChild("##descriptionlist",  imgui.ImVec2(610, 565), true)
         
         if DescriptionId == 1 then
@@ -89,6 +102,17 @@ function imgui.OnDrawFrame()
             imgui.PushFont(fontsize_basic)
             imgui.Text(desc3[2])
             imgui.PopFont()
+
+            imgui.PushFont(fontsize)
+            imgui.Text("Answers Helper")
+            imgui.PopFont()
+
+            imgui.Text('Количество ответов: ' .. answers_count)
+            imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
+            if imgui.Button('Сбросить счётчик ответов') then
+                answhelp_reset()
+            end
+            imgui.PopStyleColor(1)
         end
 
         if DescriptionId == 4 then
@@ -124,11 +148,15 @@ function imgui.BeforeDrawFrame()
     if fontsize_basic == nil then
         fontsize_basic = imgui.GetIO().Fonts:AddFontFromFileTTF(getFolderPath(0x14) .. '\\trebucbd.ttf', 16.0, nil, imgui.GetIO().Fonts:GetGlyphRangesCyrillic())
     end
+
+    if fontsize_medium == nil then
+        fontsize_medium = imgui.GetIO().Fonts:AddFontFromFileTTF(getFolderPath(0x14) .. '\\trebucbd.ttf', 20.0, nil, imgui.GetIO().Fonts:GetGlyphRangesCyrillic())
+    end
 end
 
 function printChatMessage(message)
     if message == nil then
-        print("������! Message = nil. �� printChatMessage")
+        print("Ошибка! Message = nil. От printChatMessage")
         return
     end
     sampAddChatMessage("{EE9611}" .. "[Trinity Helper] " .. cp1251:encode(message, "UTF-8"), 0xFF9900)
@@ -156,8 +184,6 @@ function main()
     if not isSampfuncsLoaded() or not isSampLoaded() then return end
     while not isSampAvailable() do wait(100) end
     sampRegisterChatCommand("trphelper", trphelper_func)
-    sampRegisterChatCommand("answhelp.print", answhelp_print)
-    sampRegisterChatCommand("answhelp.reset", answhelp_reset)
 
     loadAnswersCount()
 
