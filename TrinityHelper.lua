@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("3.1")
+script_version("3.2")
 
 require "lib.moonloader"
 local sampev = require "lib.samp.events"
@@ -9,7 +9,7 @@ local encoding = require "encoding"
 encoding.default = "CP1251"
 u8 = encoding.UTF8
 
-resources_dir = getGameDirectory() .. "//moonloader//resource//"
+resources_dir = getGameDirectory() .. "//moonloader//resource//trinity_helper//"
 
 last_id = nil
 answers_count = 0
@@ -195,13 +195,13 @@ function sampev.onServerMessage(color, text)
 end
 
 function loadAnswersCount()
-    file = io.open(getGameDirectory().."//moonloader//resource//answers.txt", "r")
+    file = io.open(resources_dir .. "answers.txt", "r")
     answers_count = file:read("*a")
     file:close()
 end
 
 function saveAnswers(count)
-    file = io.open(getGameDirectory().."//moonloader//resource//answers.txt", "w")
+    file = io.open(resources_dir .. "answers.txt", "w")
     file:write(answers_count)
     file:close()
 end
@@ -211,15 +211,19 @@ function trphelper_func()
 end
 
 function answhelp_print()
-    file = io.open(getGameDirectory().."//moonloader//resource//answers.txt", "r")
+    file = io.open(resources_dir .. "answers.txt", "r")
     printChatMessage("¬аше количество ответов: " .. answers_count)
     file:close()
 end
 
 function answhelp_reset()
-    file = io.open(getGameDirectory().."//moonloader//resource//answers.txt", "w")
+    file = io.open(resources_dir .. "answers.txt", "w")
     file:write("0")
     file:close()
     loadAnswersCount()
     printChatMessage("—чЄтчик ответов успешно обнулЄн.")
+end
+
+function updateScript()
+    downloadUrlToFile('ссылка', 'путь к сохранению файла', function(id, status, p1, p2) end)
 end
