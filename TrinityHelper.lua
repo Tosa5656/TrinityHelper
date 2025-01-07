@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("4.5")
+script_version("4.6")
 
 require "lib.moonloader"
 local sampev = require "lib.samp.events"
@@ -31,6 +31,8 @@ local fontsize_basic = nil
 local fonsize_medium = nil
 local fontsize = nil
 
+actual_version = nil
+
 function imgui.OnDrawFrame()
     if show_main_window then
         imgui.SetNextWindowSize(imgui.ImVec2(800, 600), imgui.Cond.Always)
@@ -60,16 +62,29 @@ function imgui.OnDrawFrame()
         imgui.PopStyleColor(1)
 
         imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
-        if imgui.Button("Предложения\n  по скрипту", imgui.ImVec2(160, 35)) then
+        if imgui.Button("Обновление", imgui.ImVec2(160, 35)) then
             DescriptionId = 4
         end
         imgui.PopStyleColor(1)
 
         imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
-        if imgui.Button("Обратная связь", imgui.ImVec2(160, 35)) then
+        if imgui.Button("История обновлений", imgui.ImVec2(160, 35)) then
             DescriptionId = 5
         end
         imgui.PopStyleColor(1)
+
+        imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
+        if imgui.Button("Предложения\n  по скрипту", imgui.ImVec2(160, 35)) then
+            DescriptionId = 6
+        end
+        imgui.PopStyleColor(1)
+
+        imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
+        if imgui.Button("Обратная связь", imgui.ImVec2(160, 35)) then
+            DescriptionId = 7
+        end
+        imgui.PopStyleColor(1)
+
         imgui.EndChild()
         imgui.SameLine()
         imgui.BeginChild("##descriptionlist",  imgui.ImVec2(610, 565), true)
@@ -98,6 +113,48 @@ function imgui.OnDrawFrame()
             imgui.PushFont(fontsize)
             imgui.Text(desc3[1])
             imgui.PopFont()
+
+            imgui.PushFont(fontsize)
+            imgui.Text("Answers Helper")
+            imgui.PopFont()
+
+            imgui.PushFont(fontsize_basic)
+            imgui.Text('Количество ответов: ' .. answers_count)
+            imgui.PopFont()
+            imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
+            if imgui.Button('Сбросить счётчик ответов') then
+                answhelp_reset()
+            end
+            imgui.PopStyleColor(1)
+        end
+
+        if DescriptionId == 4 then
+            imgui.PushFont(fontsize)
+            imgui.Text("Обновление")
+            imgui.PopFont()
+            
+            imgui.PushFont(fontsize_basic)
+            imgui.Text(desc3[2])
+            imgui.PopFont()
+
+            imgui.PushFont(fontsize)
+            imgui.Text("Answers Helper")
+            imgui.PopFont()
+
+            imgui.PushFont(fontsize_basic)
+            imgui.Text('Установленная версия скрипта: ' .. actual_version)
+            imgui.PopFont()
+            imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
+            if imgui.Button('Обновить') then
+                sampProcessChatInput('/trphelperupdate')
+            end
+            imgui.PopStyleColor(1)
+        end
+
+        if DescriptionId == 5 then
+            imgui.PushFont(fontsize)
+            imgui.Text(desc3[1])
+            imgui.PopFont()
             
             imgui.PushFont(fontsize_basic)
             imgui.Text(desc3[2])
@@ -115,7 +172,7 @@ function imgui.OnDrawFrame()
             imgui.PopStyleColor(1)
         end
 
-        if DescriptionId == 4 then
+        if DescriptionId == 6 then
             imgui.PushFont(fontsize)
             imgui.Text(desc4[1])
             imgui.PopFont()
@@ -125,7 +182,7 @@ function imgui.OnDrawFrame()
             imgui.PopFont()
         end
 
-        if DescriptionId == 5 then
+        if DescriptionId == 7 then
             imgui.PushFont(fontsize)
             imgui.Text(desc5[1])
             imgui.PopFont()
@@ -192,6 +249,9 @@ function main()
     desc3 = readDescription("3")
     desc4 = readDescription("4")
     desc5 = readDescription("5")
+
+    version_file = io.open(resources_dir .. "version.txt")
+    actual_version = version_file:read("*a")
 
     printChatMessage("Скрипт для хелперов Trinity GTA" .. " v" ..  thisScript().version .. " " .. " от Tosa | lugovojs" .. " был запущен. Активация - /trphelper.")
 

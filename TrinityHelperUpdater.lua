@@ -18,7 +18,7 @@ function main()
 
     check_update_script()
 
-    sampRegisterChatCommand("update", update_script)
+    sampRegisterChatCommand("trphelperupdate", update_script)
 
     while true do wait(0) end
 end
@@ -55,7 +55,7 @@ function update_script()
     os.remove(getGameDirectory() .. "//moonloader//TrinityHelper.lua")
     downloadUrlToFile('https://raw.githubusercontent.com/Tosa5656/TrinityHelper/refs/heads/master/TrinityHelper.lua', getGameDirectory() .. "//moonloader//TrinityHelper.lua", function(id, status, p1, p2) end)
     os.remove(resources_dir .. "new_version.txt")
-    printChatMessage(downloaded_version)
+    printChatMessage("Скрипт обновлен до версии " .. downloaded_version)
     actual_version_file = io.open(resources_dir .. "version.txt", "w")
     actual_version_file:write(downloaded_version)
     actual_version_file:close()
