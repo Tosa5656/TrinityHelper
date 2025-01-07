@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("5.1")
+script_version("5.2")
 
 require "lib.moonloader"
 local dlstatus = require('moonloader').download_status
@@ -148,7 +148,6 @@ function imgui.OnDrawFrame()
             imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
             if imgui.Button('Обновить') then
                 update_updater()
-                wait(100)
                 sampProcessChatInput('/trphelperupdate')
             end
             imgui.PopStyleColor(1)
