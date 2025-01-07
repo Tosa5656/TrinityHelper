@@ -37,19 +37,19 @@ function imgui.OnDrawFrame()
         imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
         imgui.Begin("Trinity Helper", show_main_window, flags_main_window)
         imgui.BeginChild("##buttonslist",imgui.ImVec2(170 ,565), true)
-        if imgui.Button(u8"ГЋ Г±ГЄГ°ГЁГЇГІГҐ", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"О скрипте", imgui.ImVec2(160, 35)) then
             DescriptionId = 1
         end
 
-        if imgui.Button(u8"Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГї\nГ¤Г«Гї ГµГҐГ«ГЇГҐГ°Г®Гў", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"Информация\nдля хелперов", imgui.ImVec2(160, 35)) then
             DescriptionId = 2
         end
 
-        if imgui.Button(u8"ГЌГ Г±ГІГ°Г®Г©ГЄГЁ", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"Предложения\n  по скрипту", imgui.ImVec2(160, 35)) then
             DescriptionId = 3
         end
 
-        if imgui.Button(u8"ГЏГ°ГҐГ¤Г«Г®Г¦ГҐГ­ГЁГї\n  ГЇГ® Г±ГЄГ°ГЁГЇГІГі", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"Обратная связь", imgui.ImVec2(160, 35)) then
             DescriptionId = 4
         end
 
@@ -167,7 +167,7 @@ function main()
     desc4 = readDescription("4")
     desc5 = readDescription("5")
 
-    printChatMessage("[Trinity Helper] " .. "Скрипт для хелпера Trinity GTA" .. " v" ..  thisScript().version .. " " .. " от Tosa | lugovojs." .. " был запущен. Активация - /trphelper.")
+    printChatMessage("[Trinity Helper] " .. "Скрипт для хелпера Trinity GTA" .. " v" ..  thisScript().version .. " " .. "от Tosa | lugovojs." .. " был запущен. Активация - /trphelper."ы)
 
     imgui.Process = true
 
