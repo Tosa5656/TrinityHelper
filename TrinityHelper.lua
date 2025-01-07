@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("5.0")
+script_version("5.1")
 
 require "lib.moonloader"
 local dlstatus = require('moonloader').download_status
@@ -317,5 +317,5 @@ end
 function update_updater()
     os.remove(getGameDirectory() .. "//moonloader//TrinityHelperUpdater.lua")
     downloadUrlToFile('https://raw.githubusercontent.com/Tosa5656/TrinityHelper/refs/heads/master/TrinityHelperUpdater.lua', getGameDirectory() .. "//moonloader//TrinityHelperUpdater.lua", function(id, status, p1, p2) end)
-    printChatMessage("Менеджер обновление был обновлен вместе с версией: " .. downloaded_version)
+    printChatMessage("Менеджер обновлений был успешно обновлён. ")
 end
