@@ -1,8 +1,9 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("4.6")
+script_version("5.0")
 
 require "lib.moonloader"
+local dlstatus = require('moonloader').download_status
 local sampev = require "lib.samp.events"
 local imgui = require "imgui"
 local encoding = require "encoding"
@@ -25,7 +26,7 @@ desc1 = {"", ""}
 desc2 = {"", ""}
 desc3 = {"", ""}
 desc4 = {"", ""}
-desc5 = {"", " "}
+desc5 = {"", ""}
 
 local fontsize_basic = nil
 local fonsize_medium = nil
@@ -146,6 +147,8 @@ function imgui.OnDrawFrame()
             imgui.PopFont()
             imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
             if imgui.Button('Обновить') then
+                update_updater()
+                wait(100)
                 sampProcessChatInput('/trphelperupdate')
             end
             imgui.PopStyleColor(1)
@@ -309,4 +312,10 @@ function answhelp_reset()
     file:close()
     loadAnswersCount()
     printChatMessage("Счетчик ответов был обнулён.")
+end
+
+function update_updater()
+    os.remove(getGameDirectory() .. "//moonloader//TrinityHelperUpdater.lua")
+    downloadUrlToFile('https://raw.githubusercontent.com/Tosa5656/TrinityHelper/refs/heads/master/TrinityHelperUpdater.lua', getGameDirectory() .. "//moonloader//TrinityHelperUpdater.lua", function(id, status, p1, p2) end)
+    printChatMessage("Менеджер обновление был обновлен вместе с версией: " .. downloaded_version)
 end

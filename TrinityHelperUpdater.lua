@@ -1,6 +1,6 @@
 script_name("Trinity Helper Updater")
 script_author("Tosa | lugovojs.")
-script_version("2.0")
+script_version("3.0")
 
 require "lib.moonloader"
 local dlstatus = require('moonloader').download_status
