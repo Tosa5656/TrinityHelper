@@ -36,23 +36,23 @@ function imgui.OnDrawFrame()
         imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
         imgui.Begin("Trinity Helper", show_main_window, flags_main_window)
         imgui.BeginChild("##buttonslist",imgui.ImVec2(170 ,565), true)
-        if imgui.Button(u8"О скрипте", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЋ Г±ГЄГ°ГЁГЇГІГҐ", imgui.ImVec2(160, 35)) then
             DescriptionId = 1
         end
 
-        if imgui.Button(u8"Информация\nдля хелперов", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГї\nГ¤Г«Гї ГµГҐГ«ГЇГҐГ°Г®Гў", imgui.ImVec2(160, 35)) then
             DescriptionId = 2
         end
 
-        if imgui.Button(u8"Настройки", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЌГ Г±ГІГ°Г®Г©ГЄГЁ", imgui.ImVec2(160, 35)) then
             DescriptionId = 3
         end
 
-        if imgui.Button(u8"Предложения\n  по скрипту", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЏГ°ГҐГ¤Г«Г®Г¦ГҐГ­ГЁГї\n  ГЇГ® Г±ГЄГ°ГЁГЇГІГі", imgui.ImVec2(160, 35)) then
             DescriptionId = 4
         end
 
-        if imgui.Button(u8"Обратная связь", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЋГЎГ°Г ГІГ­Г Гї Г±ГўГїГ§Гј", imgui.ImVec2(160, 35)) then
             DescriptionId = 5
         end
         imgui.EndChild()
@@ -117,7 +117,7 @@ end
 
 function imgui.BeforeDrawFrame()
     if fontsize == nil then
-        fontsize = imgui.GetIO().Fonts:AddFontFromFileTTF(getFolderPath(0x14) .. '\\trebucbd.ttf', 30.0, nil, imgui.GetIO().Fonts:GetGlyphRangesCyrillic()) -- вместо 30 любой нужный размер
+        fontsize = imgui.GetIO().Fonts:AddFontFromFileTTF(getFolderPath(0x14) .. '\\trebucbd.ttf', 30.0, nil, imgui.GetIO().Fonts:GetGlyphRangesCyrillic()) -- ГўГ¬ГҐГ±ГІГ® 30 Г«ГѕГЎГ®Г© Г­ГіГ¦Г­Г»Г© Г°Г Г§Г¬ГҐГ°
     end
 
     if fontsize_basic == nil then
@@ -166,7 +166,7 @@ function main()
     desc4 = readDescription("4")
     desc5 = readDescription("5")
 
-    printChatMessage("[Trinity Helper] " .. "Скрипт для хелпера Trinity GTA" .. " v" ..  thisScript().version .. " " .. "от Tosa | lugovojs." .. " был запущен. Активация - /trphelper.")
+    printChatMessage("[Trinity Helper] " .. "Г‘ГЄГ°ГЁГЇГІ Г¤Г«Гї ГµГҐГ«ГЇГҐГ°Г  Trinity GTA" .. " v" ..  thisScript().version .. " " .. "Г®ГІ Tosa | lugovojs." .. " ГЎГ»Г« Г§Г ГЇГіГ№ГҐГ­. ГЂГЄГІГЁГўГ Г¶ГЁГї - /trphelper.")
 
     imgui.Process = true
 
@@ -174,7 +174,7 @@ function main()
         imgui.Process = show_main_window.v
         if  wasKeyPressed(VK_1) and isKeyDown(VK_MENU) then
             if last_id == nil then
-                printChatMessage("Не найдено последнего вопроса и его ID.")
+                printChatMessage("ГЌГҐ Г­Г Г©Г¤ГҐГ­Г® ГЇГ®Г±Г«ГҐГ¤Г­ГҐГЈГ® ГўГ®ГЇГ°Г®Г±Г  ГЁ ГҐГЈГ® ID.")
             else
                 sampSetChatInputText('/answ '..last_id..' ')
                 sampSetChatInputEnabled(true)
@@ -184,11 +184,11 @@ function main()
 end
 
 function sampev.onServerMessage(color, text)
-    if text:match('Вопрос%sот%s.*%sID%s%d+:.*') then
-        last_id = text:match('Вопрос%sот%s.*%sID%s(%d+):.*')
+    if text:match('Г‚Г®ГЇГ°Г®Г±%sГ®ГІ%s.*%sID%s%d+:.*') then
+        last_id = text:match('Г‚Г®ГЇГ°Г®Г±%sГ®ГІ%s.*%sID%s(%d+):.*')
     end
 
-    if text:match('От%sManny_Westfall%sдля%s.*:%s*') then
+    if text:match('ГЋГІ%sManny_Westfall%sГ¤Г«Гї%s.*:%s*') then
         answers_count = answers_count + 1
         saveAnswers()
     end
@@ -212,7 +212,7 @@ end
 
 function answhelp_print()
     file = io.open(resources_dir .. "answers.txt", "r")
-    printChatMessage("Ваше количество ответов: " .. answers_count)
+    printChatMessage("Г‚Г ГёГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г®ГІГўГҐГІГ®Гў: " .. answers_count)
     file:close()
 end
 
@@ -221,9 +221,9 @@ function answhelp_reset()
     file:write("0")
     file:close()
     loadAnswersCount()
-    printChatMessage("Счётчик ответов успешно обнулён.")
+    printChatMessage("Г‘Г·ВёГІГ·ГЁГЄ Г®ГІГўГҐГІГ®Гў ГіГ±ГЇГҐГёГ­Г® Г®ГЎГ­ГіГ«ВёГ­.")
 end
 
 function updateScript()
-    downloadUrlToFile('ссылка', 'путь к сохранению файла', function(id, status, p1, p2) end)
+    downloadUrlToFile('Г±Г±Г»Г«ГЄГ ', 'ГЇГіГІГј ГЄ Г±Г®ГµГ°Г Г­ГҐГ­ГЁГѕ ГґГ Г©Г«Г ', function(id, status, p1, p2) end)
 end
