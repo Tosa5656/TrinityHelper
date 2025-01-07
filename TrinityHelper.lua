@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("5.2")
+script_version("5.3")
 
 require "lib.moonloader"
 local dlstatus = require('moonloader').download_status
@@ -133,20 +133,12 @@ function imgui.OnDrawFrame()
             imgui.PushFont(fontsize)
             imgui.Text("Обновление")
             imgui.PopFont()
-            
-            imgui.PushFont(fontsize_basic)
-            imgui.Text(desc3[2])
-            imgui.PopFont()
-
-            imgui.PushFont(fontsize)
-            imgui.Text("Answers Helper")
-            imgui.PopFont()
 
             imgui.PushFont(fontsize_basic)
             imgui.Text('Установленная версия скрипта: ' .. actual_version)
             imgui.PopFont()
             imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
-            if imgui.Button('Обновить') then
+            if imgui.Button('Обновить', imgui.ImVec2(160, 35)) then
                 update_updater()
                 sampProcessChatInput('/trphelperupdate')
             end
@@ -155,23 +147,15 @@ function imgui.OnDrawFrame()
 
         if DescriptionId == 5 then
             imgui.PushFont(fontsize)
-            imgui.Text(desc3[1])
+            imgui.Text("История обновлений")
             imgui.PopFont()
-            
+
             imgui.PushFont(fontsize_basic)
-            imgui.Text(desc3[2])
+            imgui.Text("5.3 - исправлен GUI некоторых вкладок, добавлена история обновлений.")
+            imgui.Text("5.1-5.2 - полный переход на кодировку  UTF-8, переход на MimGUI, добавлены настро-\nйки, обновления, исправление работы менеджера обновлений, исправление критической ошибки.")
+            imgui.Text("4.x - исправление ошибок кодировки, рабочая система автообновления.")
+            imgui.Text("3.x - первая открытая версия.")
             imgui.PopFont()
-
-            imgui.PushFont(fontsize)
-            imgui.Text("Answers Helper")
-            imgui.PopFont()
-
-            imgui.Text('Количество ответов: ' .. answers_count)
-            imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
-            if imgui.Button('Сбросить счётчик ответов') then
-                answhelp_reset()
-            end
-            imgui.PopStyleColor(1)
         end
 
         if DescriptionId == 6 then
