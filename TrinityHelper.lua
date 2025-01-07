@@ -1,6 +1,6 @@
 script_name("Trinity Helper")
 script_author("Tosa | lugovojs.")
-script_version("4.1")
+script_version("4.2")
 
 require "lib.moonloader"
 local sampev = require "lib.samp.events"
@@ -8,6 +8,7 @@ local imgui = require "imgui"
 local encoding = require "encoding"
 encoding.default = "CP1251"
 u8 = encoding.UTF8
+cp1251 = encoding.CP1251
 
 resources_dir = getGameDirectory() .. "//moonloader//resource//trinity_helper//"
 
@@ -24,7 +25,7 @@ desc1 = {"", ""}
 desc2 = {"", ""}
 desc3 = {"", ""}
 desc4 = {"", ""}
-desc5 = {"", ""}
+desc5 = {"", " "}
 
 local fontsize = nil
 local fontsize_basic = nil
@@ -36,23 +37,23 @@ function imgui.OnDrawFrame()
         imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
         imgui.Begin("Trinity Helper", show_main_window, flags_main_window)
         imgui.BeginChild("##buttonslist",imgui.ImVec2(170 ,565), true)
-        if imgui.Button(u8"О скрипте", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЋ Г±ГЄГ°ГЁГЇГІГҐ", imgui.ImVec2(160, 35)) then
             DescriptionId = 1
         end
 
-        if imgui.Button(u8"Информация\nдля хелперов", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГї\nГ¤Г«Гї ГµГҐГ«ГЇГҐГ°Г®Гў", imgui.ImVec2(160, 35)) then
             DescriptionId = 2
         end
 
-        if imgui.Button(u8"Настройки", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЌГ Г±ГІГ°Г®Г©ГЄГЁ", imgui.ImVec2(160, 35)) then
             DescriptionId = 3
         end
 
-        if imgui.Button(u8"Предложения\n  по скрипту", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЏГ°ГҐГ¤Г«Г®Г¦ГҐГ­ГЁГї\n  ГЇГ® Г±ГЄГ°ГЁГЇГІГі", imgui.ImVec2(160, 35)) then
             DescriptionId = 4
         end
 
-        if imgui.Button(u8"Обратная связь", imgui.ImVec2(160, 35)) then
+        if imgui.Button(u8"ГЋГЎГ°Г ГІГ­Г Гї Г±ГўГїГ§Гј", imgui.ImVec2(160, 35)) then
             DescriptionId = 5
         end
         imgui.EndChild()
@@ -117,7 +118,7 @@ end
 
 function imgui.BeforeDrawFrame()
     if fontsize == nil then
-        fontsize = imgui.GetIO().Fonts:AddFontFromFileTTF(getFolderPath(0x14) .. '\\trebucbd.ttf', 30.0, nil, imgui.GetIO().Fonts:GetGlyphRangesCyrillic()) -- Р“СћР“В¬Р“ТђР“В±Р“Р†Р“В® 30 Р“В«Р“С•Р“РЋР“В®Р“В© Р“В­Р“С–Р“В¦Р“В­Р“В»Р“В© Р“В°Р“В Р“В§Р“В¬Р“ТђР“В°
+        fontsize = imgui.GetIO().Fonts:AddFontFromFileTTF(getFolderPath(0x14) .. '\\trebucbd.ttf', 30.0, nil, imgui.GetIO().Fonts:GetGlyphRangesCyrillic()) -- ГђвЂњГ‘ЕѕГђвЂњГ‚В¬ГђвЂњГ’ВђГђвЂњГ‚В±ГђвЂњГђвЂ ГђвЂњГ‚В® 30 ГђвЂњГ‚В«ГђвЂњГ‘вЂўГђвЂњГђЕЅГђвЂњГ‚В®ГђвЂњГ‚В© ГђвЂњГ‚В­ГђвЂњГ‘вЂ“ГђвЂњГ‚В¦ГђвЂњГ‚В­ГђвЂњГ‚В»ГђвЂњГ‚В© ГђвЂњГ‚В°ГђвЂњГ‚В ГђвЂњГ‚В§ГђвЂњГ‚В¬ГђвЂњГ’ВђГђвЂњГ‚В°
     end
 
     if fontsize_basic == nil then
@@ -130,7 +131,7 @@ function printChatMessage(message)
         print("Error! Message = nil. From printChatMessage")
         return
     end
-    sampAddChatMessage("{EE9611}" .. message, 0xFF9900)
+    sampAddChatMessage("{EE9611}" .. "[Trinity Helper]" .. cp1251(message), 0xFF9900)
 end
 
 function readDescription(number)
@@ -174,7 +175,7 @@ function main()
         imgui.Process = show_main_window.v
         if  wasKeyPressed(VK_1) and isKeyDown(VK_MENU) then
             if last_id == nil then
-                printChatMessage("Не найдено последнего вопроса и его ID")
+                printChatMessage("Не найдено последнего вопроса и его ID.")
             else
                 sampSetChatInputText('/answ '..last_id..' ')
                 sampSetChatInputEnabled(true)
@@ -188,7 +189,7 @@ function sampev.onServerMessage(color, text)
         last_id = text:match('Вопрос%sот%s.*%sID%s(%d+):.*')
     end
 
-    if text:match('От%Manny_Westfall%sдля%s.*:%s*') then
+    if text:match('От%sManny_Westfall%sдля%s.*:%s*') then
         answers_count = answers_count + 1
         saveAnswers()
     end
