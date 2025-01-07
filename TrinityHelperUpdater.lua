@@ -49,6 +49,8 @@ end
 function update_script()
     os.remove(getGameDirectory() .. "//moonloader//TrinityHelper.lua")
     downloadUrlToFile('https://raw.githubusercontent.com/Tosa5656/TrinityHelper/refs/heads/master/TrinityHelper.lua', getGameDirectory() .. "//moonloader//TrinityHelper.lua", function(id, status, p1, p2) end)
+    os.remove(resources_dir .. "new_version.txt")
+    actual_version_file = io.open(resources_dir .. "version.txt")
+    actual_version_file:write(downloaded_version)
+    actual_version_file:close()
 end
-
---https://github.com/Tosa5656/TrinityHelper/raw/refs/heads/master/TrinityHelper.lua
