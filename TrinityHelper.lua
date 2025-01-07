@@ -128,7 +128,7 @@ end
 
 function printChatMessage(message)
     if message == nil then
-        print("Error! Message = nil. From printChatMessage")
+        print("Ошибка! Message = nil. Из printChatMessage")
         return
     end
     sampAddChatMessage("{EE9611}" .. "[Trinity Helper] " .. cp1251:encode(message, "UTF-8"), 0xFF9900)
