@@ -34,6 +34,9 @@ local fontsize = nil
 
 actual_version = nil
 
+nick_input_buffer = imgui.ImBuffer(256)
+nick = ""
+
 function imgui.OnDrawFrame()
     if show_main_window then
         imgui.SetNextWindowSize(imgui.ImVec2(800, 600), imgui.Cond.Always)
@@ -92,32 +95,50 @@ function imgui.OnDrawFrame()
         
         if DescriptionId == 1 then
             imgui.PushFont(fontsize)
-            imgui.Text(desc1[1])
+            imgui.Text("О скрипте")
             imgui.PopFont()
             
             imgui.PushFont(fontsize_basic)
-            imgui.Text(desc1[2])
+            imgui.Text("Данный скрипт был написан специально для хелперов Trinity GTA. Пока что скрипт\nнаходиться на стадии активной разработки.\n")
+            imgui.Text("В скрипте присутствует АвтоИД(ALT + 1), счётчик количества ваших ответов\n(чтобы увидеть количества ответов или сбросить их, откройте настройки),\nGUI интерфейс скрипта.\n")
+            imgui.Text("В данный скрипт будут добавлены все основные функции проекта.\nСкрипт подходить для всех серверов Trinity(RP и RPG).")
+            imgui.Text("Так как скрипт разрабатывается двумя людьми, он будет обновлятся,\nпо мере успеваемости.")
+            imgui.PopFont()
+
+            imgui.PushFont(fontsize_medium)
+            imgui.Text("Интерфейс")
+            imgui.PopFont()
+
+            imgui.PushFont(fontsize_basic)
+            imgui.Text("Кратко про интерфейс:\nСлева расположенно меню, где вы можете переключаться между разделами скрипта,\nа справа содержимое этих разделов.")
+            imgui.Text("О скрипте - краткая информация про скрипт, и как им пользоваться.")
+            imgui.Text("Информация для хелперов - команды и макросы для хелперов.")
+            imgui.Text("Настройки - управление модулями скрипта.")
+            imgui.Text("Обновление - обновление скрипта.")
+            imgui.Text("Предложения по скрипту - информация о том, куда можно написать своё предложение по скрипту.")
+            imgui.Text("Обратная связь - связь с создателями скрипта.")
             imgui.PopFont()
         end
 
         if DescriptionId == 2 then
             imgui.PushFont(fontsize)
-            imgui.Text(desc2[1])
+            imgui.Text("Информация для хелперов")
             imgui.PopFont()
             
             imgui.PushFont(fontsize_basic)
-            imgui.Text(desc2[2])
+            imgui.Text("В разделе приведены примеры нужных команд и макросов для хелперов.\n/answ [текст]- Ответить на вопрос игрока.\n/hc [текст] - Отправить сообщение в чат хелперов.\n/helpers - Список хелперов онлайн.\n")
+            imgui.Text("Далее приведены макросы:\n/tf - Сообщение игроку о разделе FAQ на форуме.\n/tb - Сообщение игроку о теме 'Баги и грамматические ошибки'.\n/geo - Сообщение игроку о странах и городах на сервере.")
+            imgui.Text("/grup - Сообщение игроку о подробностях в официальной группе ВК проекта.\n/sgrup - Сообщение игроку о подробностях в официальной группе ВК сервера.\n/art - Сообщение игроку о справочных статьях в /mm.")
+            imgui.Text("/rpg - Сообщение игроку об отличиях RPG и RP серверов проекта.\n/don - Сообщение игроку с адресом страницы доната.\n/fad - Сообщение игроку о командах для подачи рекламы на радио.\n/bsp - Сообщение игроку с инструкцией по игре в баскетбол.")
+            imgui.Text("/qp - Сообщение игроку об обмене квестпоинтов на игровой опыт.\n/rec - Сообщение игроку о способностях восстановления аккаунта.\n/chip - Сообщение игроку о фишках.\n/lch - Сообщение игроку о лаунчере Trinity GTA.")
             imgui.PopFont()
         end
 
         if DescriptionId == 3 then
             imgui.PushFont(fontsize)
-            imgui.Text(desc3[1])
+            imgui.Text("Настройки")
             imgui.PopFont()
 
-            imgui.PushFont(fontsize_basic)
-            imgui.Text('Количество ответов: ' .. answers_count)
-            imgui.PopFont()
             imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
             if imgui.Button('Сбросить счётчик ответов') then
                 answhelp_reset()
@@ -158,21 +179,30 @@ function imgui.OnDrawFrame()
 
         if DescriptionId == 6 then
             imgui.PushFont(fontsize)
-            imgui.Text(desc4[1])
+            imgui.Text("Предложения по скрипту")
             imgui.PopFont()
             
             imgui.PushFont(fontsize_basic)
-            imgui.Text(desc4[2])
+            imgui.Text("В данном разделе вы можете связаться с нами и рассказать свою идею по улучшению\nили исправлению какой-либо системы в скрипте.\n\nVK - @heaviside666")
             imgui.PopFont()
         end
 
         if DescriptionId == 7 then
             imgui.PushFont(fontsize)
-            imgui.Text(desc5[1])
+            imgui.Text("Контакты разработчиков")
             imgui.PopFont()
             
             imgui.PushFont(fontsize_basic)
-            imgui.Text(desc5[2])
+            imgui.Text("В данном разделе представлены контакты разработчиков для обратной связи.")
+            imgui.PushStyleColor(imgui.Col.Button, titlebarBgColor)
+            if imgui.Button('VK', imgui.ImVec2(160, 35)) then
+                os.execute('explorer https://vk.com/heaviside666')
+            end
+
+            if imgui.Button('GitHub', imgui.ImVec2(160, 35)) then
+                os.execute('explorer https://github.com/Tosa5656/TrinityHelper')
+            end
+            imgui.PopStyleColor(1)
             imgui.PopFont()
         end
 
@@ -227,12 +257,6 @@ function main()
     sampRegisterChatCommand("trphelper", trphelper_func)
 
     loadAnswersCount()
-
-    desc1 = readDescription("1")
-    desc2 = readDescription("2")
-    desc3 = readDescription("3")
-    desc4 = readDescription("4")
-    desc5 = readDescription("5")
 
     version_file = io.open(resources_dir .. "version.txt")
     actual_version = version_file:read("*a")
